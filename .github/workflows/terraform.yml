@@ -26,7 +26,7 @@ jobs:
           organization: bian
 
           # Name of the workspace on Terraform Cloud.
-          workspace: tf-aws-benchmark-1
+          workspace: tf-aws-benchmark
 
           # Optional message to use as name of the run.
           message: |
