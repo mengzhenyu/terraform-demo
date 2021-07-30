@@ -42,4 +42,4 @@ jobs:
           public_ip=$(terraform output public_ip)
 
       - name: Show ip
-        run: echo $public_ip
+        run: "echo $public_ip"
