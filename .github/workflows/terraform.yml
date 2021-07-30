@@ -13,9 +13,6 @@ jobs:
       - name: Download emqx package
         run: "curl -L --max-redirs -1 -o /tmp/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu18.04-4.3.2-amd64.zip"
 
-      - name: check emqx package
-        run: "stat /tmp/emqx.zip"
-
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -35,7 +32,7 @@ jobs:
         id: validate
         run: terraform validate -no-color
 
-          #- name: Terraform Apply
-          #  working-directory: ./tf-aws-benchmark
-          #  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-          #  run: terraform apply -auto-approve -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
+      - name: Terraform Apply
+        working-directory: ./tf-aws-benchmark
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
