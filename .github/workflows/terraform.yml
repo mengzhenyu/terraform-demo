@@ -23,6 +23,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: emqx/tf-aws-benchmark
+          path: tf-aws-benchmark
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
