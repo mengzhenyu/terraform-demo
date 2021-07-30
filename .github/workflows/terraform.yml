@@ -23,7 +23,6 @@ jobs:
           path: tf-aws-benchmark
 
       - name: Setup Terraform
-        working-directory: ./tf-aws-benchmark
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Format
