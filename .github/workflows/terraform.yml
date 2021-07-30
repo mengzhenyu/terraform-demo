@@ -10,13 +10,16 @@ jobs:
     name: "Terraform"
     runs-on: ubuntu-latest
     steps:
-      - name: wget
-        uses: wei/wget@v1
-        with:
-          args: -O $HOME/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu18.04-4.3.2-amd64.zip
+      #- name: wget
+      #  uses: wei/wget@v1
+      #  with:
+      #    args: -O $HOME/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu18.04-4.3.2-amd64.zip
+      #
+      - name: download
+        run: "curl -o /tmp/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu18.04-4.3.2-amd64.zip"
 
       - name: check emqx package1
-        run: "stat /github/home/emqx.zip"
+        run: "stat /tmp/emqx.zip"
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,9 +39,6 @@ jobs:
         working-directory: ./tf-aws-benchmark
         id: validate
         run: terraform validate -no-color
-
-      - name: check emqx package2
-        run: "stat /github/home/emqx.zip"
 
           #- name: Terraform Apply
           #  working-directory: ./tf-aws-benchmark
