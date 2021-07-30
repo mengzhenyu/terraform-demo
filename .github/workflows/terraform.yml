@@ -21,6 +21,8 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
 
       - name: Terraform Init
         working-directory: ./tf-aws-benchmark
@@ -35,4 +37,9 @@ jobs:
       - name: Terraform Apply
         working-directory: ./tf-aws-benchmark
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
+        run: |
+          terraform apply -auto-approve -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
+          public_ip=$(terraform output public_ip)
+
+      - name: Show ip
+        run: echo $public_ip
