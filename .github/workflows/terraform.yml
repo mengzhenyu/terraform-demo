@@ -16,7 +16,7 @@ jobs:
           args: -O /tmp/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu18.04-4.3.2-amd64.zip
 
       - name: check emqx package1
-        run: echo "stat /tmp/emqx.zip"
+        run: "stat /tmp/emqx.zip"
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
         run: terraform validate -no-color
 
       - name: check emqx package2
-        run: echo "stat /tmp/emqx.zip"
+        run: "stat /tmp/emqx.zip"
 
           #- name: Terraform Apply
           #  working-directory: ./tf-aws-benchmark
