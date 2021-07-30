@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
   terraform:
@@ -26,16 +25,13 @@ jobs:
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        working-directory: ./tf-aws-benchmark
         id: init
         run: terraform init
       
       - name: Terraform Validate
-        working-directory: ./tf-aws-benchmark
         id: validate
         run: terraform validate -no-color
 
       - name: Terraform Apply
-        working-directory: ./tf-aws-benchmark
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
