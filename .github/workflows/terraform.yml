@@ -25,11 +25,6 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Terraform Format
-        working-directory: ./tf-aws-benchmark
-        id: fmt
-        run: terraform fmt -check
-
       - name: Terraform Init
         working-directory: ./tf-aws-benchmark
         id: init
