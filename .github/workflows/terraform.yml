@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download emqx package
-        run: "curl -L --max-redirs -1 -o /tmp/emqx.zip wget https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu20.04-4.3.2-amd64.zip"
+        run: "curl -L --max-redirs -1 -o /tmp/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu20.04-4.3.2-amd64.zip"
 
       - name: Checkout
         uses: actions/checkout@v2
