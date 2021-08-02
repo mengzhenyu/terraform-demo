@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download emqx package
-        run: "curl -L --max-redirs -1 -o /tmp/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu18.04-4.3.2-amd64.zip"
+        run: "curl -L --max-redirs -1 -o /tmp/emqx.zip https://www.emqx.com/zh/downloads/enterprise/4.3.2/emqx-ee-ubuntu20.04-4.3.2-amd64.zip"
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,6 +21,8 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_wrapper: false
 
       - name: Terraform Init
         working-directory: ./tf-aws-benchmark
@@ -35,4 +37,9 @@ jobs:
       - name: Terraform Apply
         working-directory: ./tf-aws-benchmark
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
+        run: |
+          terraform apply -auto-approve -var="key_name=aws-west-bench" -var="os=ubuntu" -var="region=us-west-2" -var="emqx_lic=${{ secrets.EMQX_LIC }}"  -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
+          echo "public_ip=$(terraform output public_ip)" >> $GITHUB_ENV
+
+      - name: Show ip
+        run: echo "${{ env.public_ip }}"
