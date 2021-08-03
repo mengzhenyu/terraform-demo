@@ -1,4 +1,4 @@
-name: "Terraform"
+name: Terraform
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
         working-directory: ./tf-test-automation
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          terraform apply -auto-approve -var="key_name=aws-bench" -var="os=ubuntu" -var="region=ap-southeast-1" -var="emqx_lic=${{ secrets.EMQX_LIC }}"  -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
+          terraform apply -auto-approve -var="key_name=aws-bench" -var="os=ubuntu" -var="region=ap-southeast-1" -var="emqx_lic=${{ secrets.EMQX_LIC }}" -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
           echo "public_ip=$(terraform output public_ip)" >> $GITHUB_ENV
 
       - name: Show ip
