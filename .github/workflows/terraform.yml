@@ -45,4 +45,5 @@ jobs:
         run: echo "${{ env.public_ip }}"
 
       - name: Terraform Destroy
+        working-directory: ./tf-test-automation
         run: terraform destroy -auto-approve
