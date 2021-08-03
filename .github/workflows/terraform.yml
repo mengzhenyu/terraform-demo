@@ -43,3 +43,7 @@ jobs:
 
       - name: Show ip
         run: echo "${{ env.public_ip }}"
+
+      - name: Terraform Destroy
+        working-directory: ./tf-aws-benchmark
+        run: terraform destory -auto-approve
