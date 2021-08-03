@@ -16,8 +16,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          repository: emqx/tf-aws-benchmark
-          path: tf-aws-benchmark
+          repository: emqx/tf-test-automation
+          path: tf-test-automation
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -25,17 +25,17 @@ jobs:
           terraform_wrapper: false
 
       - name: Terraform Init
-        working-directory: ./tf-aws-benchmark
+        working-directory: ./tf-test-automation
         id: init
         run: terraform init
 
       - name: Terraform Validate
-        working-directory: ./tf-aws-benchmark
+        working-directory: ./tf-test-automation
         id: validate
         run: terraform validate -no-color
 
       - name: Terraform Apply
-        working-directory: ./tf-aws-benchmark
+        working-directory: ./tf-test-automation
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           terraform apply -auto-approve -var="key_name=aws-bench" -var="os=ubuntu" -var="region=ap-southeast-1" -var="emqx_lic=${{ secrets.EMQX_LIC }}"  -var="access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var="emqx_package=/tmp/emqx.zip"
