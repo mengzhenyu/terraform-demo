@@ -8,14 +8,12 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
     outputs:
       public_ip: ${{ steps.server_ip.outputs.public_ip }}
       private_ip: ${{ steps.server_ip.outputs.private_ip }}
-
     steps:
       - name: Download emqx package
-      - uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
           name: emqx
           path: /tmp
